@@ -8,6 +8,7 @@ import json
 from openai import OpenAI
 import schedule
 import time
+import requests
 
 # Setup
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
