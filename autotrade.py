@@ -14,6 +14,9 @@ import requests
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 upbit = pyupbit.Upbit(os.getenv("UPBIT_ACCESS_KEY"), os.getenv("UPBIT_SECRET_KEY"))
 myToken = os.getenv("SLACK_TOKEN")
+print("autotrade start")
+# 시작 메세지 슬랙 전송
+post_message(myToken,"#stock", "autotrade start")
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -21,14 +24,6 @@ def post_message(token, channel, text):
         headers={"Authorization": "Bearer "+token},
         data={"channel": channel,"text": text}
     )
-
-# 실행 시작 메시지 전송 함수 호출
-current_price = pyupbit.get_current_price("KRW-BTC")
-post_message(myToken, "#stock", f"autotrade 시작, BTC 현재 가격: {current_price}")
-
-def get_current_price(ticker):
-    """현재가 조회"""
-    return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
 
 def get_current_status():
     orderbook = pyupbit.get_orderbook(ticker="KRW-BTC")
