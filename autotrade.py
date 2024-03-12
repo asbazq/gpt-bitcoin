@@ -14,16 +14,8 @@ import requests
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 upbit = pyupbit.Upbit(os.getenv("UPBIT_ACCESS_KEY"), os.getenv("UPBIT_SECRET_KEY"))
 myToken = os.getenv("SLACK_TOKEN")
-print("autotrade start")
-# 시작 메세지 슬랙 전송
-post_message(myToken,"#stock", "autotrade start")
-
-def post_message(token, channel, text):
-    """슬랙 메시지 전송"""
-    response = requests.post("https://slack.com/api/chat.postMessage",
-        headers={"Authorization": "Bearer "+token},
-        data={"channel": channel,"text": text}
-    )
+slack = Slacker('myToken')
+slack.chat.post_message('#stock', 'autotrade start!')
 
 def get_current_status():
     orderbook = pyupbit.get_orderbook(ticker="KRW-BTC")
