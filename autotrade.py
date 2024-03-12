@@ -26,6 +26,10 @@ def post_message(token, channel, text):
 current_price = pyupbit.get_current_price("KRW-BTC")
 post_message(myToken, "#stock", f"autotrade 시작, BTC 현재 가격: {current_price}")
 
+def get_current_price(ticker):
+    """현재가 조회"""
+    return pyupbit.get_orderbook(ticker=ticker)["orderbook_units"][0]["ask_price"]
+
 def get_current_status():
     orderbook = pyupbit.get_orderbook(ticker="KRW-BTC")
     current_time = orderbook['timestamp']
