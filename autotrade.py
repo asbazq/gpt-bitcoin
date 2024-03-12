@@ -12,6 +12,14 @@ import time
 # Setup
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 upbit = pyupbit.Upbit(os.getenv("UPBIT_ACCESS_KEY"), os.getenv("UPBIT_SECRET_KEY"))
+myToken = os.getenv("SLACK_TOKEN")
+
+def post_message(token, channel, text):
+    """슬랙 메시지 전송"""
+    response = requests.post("https://slack.com/api/chat.postMessage",
+        headers={"Authorization": "Bearer "+token},
+        data={"channel": channel,"text": text}
+    )
 
 def get_current_status():
     orderbook = pyupbit.get_orderbook(ticker="KRW-BTC")
@@ -119,8 +127,10 @@ def execute_buy():
         if krw > 5000:
             result = upbit.buy_market_order("KRW-BTC", krw*0.9995)
             print("Buy order successful:", result)
+            post_message(myToken, "#stock", "BTC buy : " + str(result))
     except Exception as e:
         print(f"Failed to execute buy order: {e}")
+        post_message(myToken, "#stock", str(e))
 
 def execute_sell():
     print("Attempting to sell BTC...")
@@ -130,8 +140,10 @@ def execute_sell():
         if current_price*btc > 5000:
             result = upbit.sell_market_order("KRW-BTC", btc)
             print("Sell order successful:", result)
+            post_message(myToken, "#stock", "BTC sell : " + str(result))
     except Exception as e:
         print(f"Failed to execute sell order: {e}")
+        post_message(myToken, "#stock", str(e))
 
 def make_decision_and_execute():
     print("Making decision and executing...")
