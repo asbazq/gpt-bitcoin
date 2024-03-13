@@ -128,7 +128,6 @@ def execute_buy():
         if krw > 5000:
             result = upbit.buy_market_order("KRW-BTC", krw*0.9995)
             print("Buy order successful:", result)
-            post_message(myToken, "#stock", "BTC buy : " + str(result))
     except Exception as e:
         print(f"Failed to execute buy order: {e}")
         post_message(myToken, "#stock", str(e))
@@ -141,7 +140,6 @@ def execute_sell():
         if current_price*btc > 5000:
             result = upbit.sell_market_order("KRW-BTC", btc)
             print("Sell order successful:", result)
-            post_message(myToken, "#stock", "BTC sell : " + str(result))
     except Exception as e:
         print(f"Failed to execute sell order: {e}")
         post_message(myToken, "#stock", str(e))
@@ -154,6 +152,7 @@ def make_decision_and_execute():
     try:
         decision = json.loads(advice)
         print(decision)
+        post_message(myToken, "#stock", "Decision : " + str(decision))
         if decision.get('decision') == "buy":
             execute_buy()
         elif decision.get('decision') == "sell":
