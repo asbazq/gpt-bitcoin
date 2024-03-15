@@ -43,7 +43,7 @@ def get_current_status():
 def fetch_and_prepare_data():
     # Fetch data
     df_daily = pyupbit.get_ohlcv("KRW-BTC", "day", count=30)
-    df_hourly = pyupbit.get_ohlcv("KRW-BTC", interval="minute180", count=24)
+    df_hourly = pyupbit.get_ohlcv("KRW-BTC", interval="minute60", count=24)
 
     # Define a helper function to add indicators
     def add_indicators(df):
@@ -162,7 +162,8 @@ def make_decision_and_execute():
 
 if __name__ == "__main__":
     make_decision_and_execute()
-    schedule.every().hour.at(":01").do(make_decision_and_execute)
+    schedule.every(3).hours.do(make_decision_and_execute)
+    # schedule.every().hour.at(":01").do(make_decision_and_execute)
 
     while True:
         schedule.run_pending()
