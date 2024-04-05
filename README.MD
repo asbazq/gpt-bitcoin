@@ -1,9 +1,30 @@
 # 비트코인 GPT 인공지능 AI 업비트 자동매매 시스템 만들기
 - GPT API를 활용하여 투자를 자동화 합니다. by 유튜버 조코딩
+
 ## 관련 링크
 - [수업 자료](https://jocoding.net/bitcoin)
-- [라이브 풀버전 링크(멤버십 전용)](https://youtube.com/live/-7IVgjUw79s?feature=share)
+- [1편 - 라이브 풀버전 링크(멤버십 전용)](https://youtube.com/live/-7IVgjUw79s?feature=share)
+- [2편 - 라이브 풀버전 링크(멤버십 전용)](https://youtube.com/live/GhZenus5rww?feature=share)
+- [3편 - 라이브 풀버전 링크(멤버십 전용)](https://youtube.com/live/ORo8QAn-g74?feature=share)
 - 편집본 (업데이트 예정)
+
+## 전략 소개
+### 1.autotrade.py, instruction.md
+- 데이터: 일(30일), 시간(24시간) OHLCV, Moving Averages, RSI, Stochastic Oscillator, MACD, Bollinger Bands, Orderbook Data
+- 전략: 1시간에 한번 판단하여 전량 매수/매도 or 홀드
+
+### 2.autotrade_v2.py, instruction_v2.md
+- 데이터: 일(30일), 시간(24시간) OHLCV, Moving Averages, RSI, Stochastic Oscillator, MACD, Bollinger Bands, Orderbook Data, 최신 뉴스 데이터(SerpApi), 공포/탐욕 지수
+- 전략:  8시간에 한번 판단하여 부분 매수/매도 or 홀드, 투자 데이터 기록하고 AI 재귀 개선
+- 뉴스 데이터 조회를 위한 [SerpApi](https://serpapi.com/) 가입 및 API KEY 등록 필요
+
+## .env 파일 생성 및 설정
+```
+OPENAI_API_KEY="YourKey"
+UPBIT_ACCESS_KEY="YourKey"
+UPBIT_SECRET_KEY="YourKey"
+SERPAPI_API_KEY="YourKey"
+```
 
 ## 로컬 환경 설정
 ```
