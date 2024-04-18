@@ -15,6 +15,14 @@ import sqlite3
 # Setup
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 upbit = pyupbit.Upbit(os.getenv("UPBIT_ACCESS_KEY"), os.getenv("UPBIT_SECRET_KEY"))
+myToken = os.getenv("SLACK_TOKEN")
+
+def post_message(token, channel, text):
+    response = requests.post("https://slack.com/api/chat.postMessage",
+        headers={"Authorization": "Bearer "+token},
+        data={"channel": channel,"text": text}
+    )
+post_message(myToken,"#stock", "autotrade start")
 
 def initialize_db(db_path='trading_decisions.sqlite'):
     with sqlite3.connect(db_path) as conn:
