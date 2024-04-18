@@ -306,6 +306,7 @@ def make_decision_and_execute():
             try:
                 percentage = decision.get('percentage', 100)
 
+                post_message(myToken, "#stock", "Decision : " + str(decision))
                 if decision.get('decision') == "buy":
                     execute_buy(percentage)
                 elif decision.get('decision') == "sell":
@@ -314,6 +315,7 @@ def make_decision_and_execute():
                 save_decision_to_db(decision, current_status)
             except Exception as e:
                 print(f"Failed to execute the decision or save to DB: {e}")
+                post_message(myToken, "#stock", str(e))
 
 if __name__ == "__main__":
     initialize_db()
@@ -328,6 +330,9 @@ if __name__ == "__main__":
 
     # Schedule the task to run at 16:01
     schedule.every().day.at("16:01").do(make_decision_and_execute)
+
+    # Schedule the task to run every n hours
+    schedule.every(4).hours.do(make_decision_and_execute)
 
     while True:
         schedule.run_pending()
